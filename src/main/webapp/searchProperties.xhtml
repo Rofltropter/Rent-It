@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Search Properties</title>
+    </h:head>
+    <h:body>
+        <p:tooltip showEvent="focus" hideEvent="blur"  />
+        <p:growl autoUpdate="true"/>
+        <h:form id="form">
+            <p:tab id="searchProperties" title="Search Properties">
+                <p:panel header="Property Specifications">
+                    <h:panelGrid columns="2">
+                        <p:outputLabel for="location" value="Location: "/>
+                        </p:selectOneMenu>
+                        <p:selectCheckboxMenu id="location" value="#{PROPERTY.chosenLocations}" label="Locations" multiple="true"
+                                              filter="true" filterMatchMode="startsWith" panelStyle="width:250px" required = "#{empty param['form:type'] and empty param['form:numBed'] and empty param['form:numBath'] and empty param['form:minRent'] and empty param['form:maxRent']}"
+                                              <f:selectItems value="#{PROPERTY.locations}" />
+                        </p:selectCheckboxMenu>
+                        <p:outputLabel value="Type of Property: "/>
+                        <p:inputText id="type"
+                                     value="#{PROPERTY.type}" 
+                                     label="Type" 
+                                     required="#{empty param['form:location'] and empty param['form:numBed'] and empty param['form:numBath'] and empty param['form:minRent'] and empty param['form:maxRent']}"   
+                    </p:inputText>
+                    <p:outputLabel value="Number of Bedrooms: "/>
+                    <p:inputText id="numBed"
+                                 value="#{PROPERTY.numBed}" 
+                                 label="#" 
+                                 required="#{empty param['form:location'] and empty param['form:type'] and empty param['form:numBath'] and empty param['form:minRent'] and empty param['form:maxRent']}"   
+                </p:inputText>
+                <p:outputLabel value="Number of Bathrooms: "/>
+                <p:inputText id="numBath"
+                             value="#{PROPERTY.numBath}" 
+                             label="#" 
+                             required="#{empty param['form:location'] and empty param['form:type'] and empty param['form:numBed'] and empty param['form:minRent'] and empty param['form:maxRent']}" 
+            </p:inputText>
+            <p:outputLabel value="Minimum Rent Amount: "/>
+            <p:inputText id="minRent"
+                         value="#{PROPERTY.minRent}" 
+                         label="#" 
+                         required="#{empty param['form:location'] and empty param['form:type'] and empty param['form:numBed'] and empty param['form:numBath'] and empty param['form:maxRent']}" 
+        </p:inputText>
+        <p:outputLabel value="Maximum Rent Amount: "/>
+        <p:inputText id="maxRent"
+                     value="#{PROPERTY.maxRent}" 
+                     label="#" 
+                     required="#{empty param['form:location'] and empty param['form:type'] and empty param['form:numBed'] and empty param['form:numBath'] and empty param['form:minRent']}" 
+    </p:inputText>
+</h:panelGrid>
+
+<p:separator />
+
+<p:commandButton id="submitBtn" value="Search" actionListener="#{PROPERTY.searchProperties}" onclick="PF('bui').show()" oncomplete="PF('bui').hide()" />
+</p:panel>
+</p:tab>
+</h:form>
+<p:blockUI block="form"  widgetVar="bui">
+    Processing<br />
+    <p:graphicImage width="100pt" value="/resources/images/ajax_loader.gif"/>
+</p:blockUI>
+</h:body>
+</html>
